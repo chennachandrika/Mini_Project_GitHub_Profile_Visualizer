@@ -6,7 +6,8 @@ import {
   LoginPageContainer,
   LoginPageHeading,
   TextInput,
-  LoginPageImage
+  LoginPageImage,
+  ErrorMessage
 } from "./styledComponents";
 
 class LoginPage extends Component {
@@ -16,7 +17,7 @@ class LoginPage extends Component {
     if (event.key === "Enter") {
       this.usernameAuthentication();
     } else {
-      this.setState({ username: event.target.value });
+      this.setState({ username: event.target.value, isUsernameInvalid: false });
     }
   };
 
@@ -62,6 +63,9 @@ class LoginPage extends Component {
             isUsernameInvalid={isUsernameInvalid}
             onKeyUp={this.onChangeUsername}
           />
+          <ErrorMessage>
+            {isUsernameInvalid && "Enter the valid github username"}
+          </ErrorMessage>
           <LoginPageImage src={LoginPageLogo} />
         </LoginPageContainer>
       </UserDataContext.Provider>

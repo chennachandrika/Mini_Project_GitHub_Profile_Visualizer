@@ -50,3 +50,14 @@ export const LoginPageImage = styled.img`
     height: 417px;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  font-size: 12px;
+  width: 232px;
+  text-align: left;
+  color: #dc2626;
+  @media screen and (min-width: 1024px) {
+    width: 458px;
+    font-size: 24px;
+  }
+`;
