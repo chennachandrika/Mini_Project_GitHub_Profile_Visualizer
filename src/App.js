@@ -12,6 +12,8 @@ export default function App() {
       <Switch>
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/repositories" component={() => {}} />
+        <Route exact path="/analysis" component={() => {}} />
         <Route component={PageNotFound} />
       </Switch>
     </BrowserRouter>
