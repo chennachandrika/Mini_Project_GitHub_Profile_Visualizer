@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@types/js-cookie": "2.2.7",
+    "browserslist": "4.16.7",
     "js-cookie": "3.0.0",
     "react": "17.0.2",
     "react-bootstrap": "1.6.1",
