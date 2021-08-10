@@ -1,36 +1,70 @@
 import { Component } from "react";
-import {} from "./styledComponents";
+import cookie from "js-cookie";
+import UserDataContext from "../../Context/UserDataContext";
+import LoginPageLogo from "./resources/LoginPageLogo.png";
+import {
+  LoginPageContainer,
+  LoginPageHeading,
+  TextInput,
+  LoginPageImage
+} from "./styledComponents";
 
 class LoginPage extends Component {
-  state = { username: "" };
-
-  componentDidMount = () => {
-    this.getAuthorization();
-  };
+  state = { username: "", gitUserData: [], isUsernameInvalid: false };
 
   onChangeUsername = (event) => {
-    this.setState({ username: event.target.value });
+    if (event.key === "Enter") {
+      this.usernameAuthentication();
+    } else {
+      this.setState({ username: event.target.value });
+    }
   };
 
-  getAuthorization = async () => {
+  onSuccessAuthenticate = (userData) => {
+    const { history } = this.props;
+    const { id } = userData;
+    this.setState({ gitUserData: userData });
+    cookie.set("awt_token", id);
+    history.replace("/profile");
+  };
+
+  onFailureAuthenticate = (error) => {
+    this.setState({ isUsernameInvalid: error, username: "" });
+  };
+
+  usernameAuthentication = async () => {
     const { username } = this.state;
-    const options = {
-      Authorization: `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 bearer`,
-      method: "GET"
-    };
     const url = `https://api.github.com/users/${username}`;
-    const promise = await fetch(url, options);
-    console.log(promise.status);
-    const response = await promise.json();
-    console.log(response);
+
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const userData = await response.json();
+      this.onSuccessAuthenticate(userData);
+    } else {
+      this.onFailureAuthenticate(true);
+    }
   };
 
   render() {
-    const { username } = this.state;
+    const { gitUserData, isUsernameInvalid } = this.state;
     return (
-      <div>
-        <input type="text" value={username} onChange={this.onChangeUsername} />
-      </div>
+      <UserDataContext.Provider
+        value={{
+          UserGitData: gitUserData
+        }}
+      >
+        <LoginPageContainer>
+          <LoginPageHeading>Github Profile Visualizer</LoginPageHeading>
+          <TextInput
+            placeholder="Enter github username"
+            type="text"
+            isUsernameInvalid={isUsernameInvalid}
+            onKeyUp={this.onChangeUsername}
+          />
+          <LoginPageImage src={LoginPageLogo} />
+        </LoginPageContainer>
+      </UserDataContext.Provider>
     );
   }
 }
