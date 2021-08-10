@@ -1,5 +1,20 @@
+import { Component } from "react";
 import Header from "../Header";
+import { ProfilePageContainer } from "./styledComponents";
 
-const ProfilePage = () => <Header />;
-
+class ProfilePage extends Component {
+  state = { userData: "" };
+  componentDidMount = () => {
+    this.getUserData();
+  };
+  getUserData = () => {};
+  render() {
+    return (
+      <>
+        <Header />
+        <ProfilePageContainer>Hi</ProfilePageContainer>
+      </>
+    );
+  }
+}
 export default ProfilePage;

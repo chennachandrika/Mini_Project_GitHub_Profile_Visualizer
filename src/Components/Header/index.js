@@ -1,14 +1,15 @@
 import { withRouter } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { RouterLink } from "./styledComponents";
+import { RouterLink, NavbarBar } from "./styledComponents";
 
 const Header = (props) => {
-  const { history } = props;
+  const { history, match } = props;
   const { location } = history;
   const { pathname } = location;
-
+  const { params } = match;
+  const { user } = params;
   return (
-    <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
+    <NavbarBar sticky="top" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand href="#home">Github Profile Visualizer</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -18,27 +19,27 @@ const Header = (props) => {
         >
           <Nav className="ml-auto">
             <RouterLink
-              to="/profile"
-              issamepath={(pathname === "/profile").toString()}
+              to={`/${user}/profile`}
+              issamepath={(pathname === `/${user}/profile`).toString()}
             >
               Profile
             </RouterLink>
             <RouterLink
-              to="/repositories"
-              issamepath={(pathname === "/repositories").toString()}
+              to={`/${user}/repositories`}
+              issamepath={(pathname === `/${user}/repositories`).toString()}
             >
               Repositories
             </RouterLink>
             <RouterLink
-              to="/analysis"
-              issamepath={(pathname === "/analysis").toString()}
+              to={`/${user}/analysis`}
+              issamepath={(pathname === `/${user}/analysis`).toString()}
             >
               Analysis
             </RouterLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </NavbarBar>
   );
 };
 

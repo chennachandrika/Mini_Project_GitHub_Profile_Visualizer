@@ -1,6 +1,5 @@
 import { Component } from "react";
 import cookie from "js-cookie";
-import UserDataContext from "../../Context/UserDataContext";
 import LoginPageLogo from "./resources/LoginPageLogo.png";
 import {
   LoginPageContainer,
@@ -11,7 +10,7 @@ import {
 } from "./styledComponents";
 
 class LoginPage extends Component {
-  state = { username: "", gitUserData: [], isUsernameInvalid: false };
+  state = { username: "", isUsernameInvalid: false };
 
   onChangeUsername = (event) => {
     if (event.key === "Enter") {
@@ -22,11 +21,13 @@ class LoginPage extends Component {
   };
 
   onSuccessAuthenticate = (userData) => {
+    const { username } = this.state;
     const { history } = this.props;
+    console.log(history);
     const { id } = userData;
-    this.setState({ gitUserData: userData });
     cookie.set("awt_token", id);
-    history.replace("/profile");
+    console.log(userData);
+    history.replace(`/${username}/profile`);
   };
 
   onFailureAuthenticate = (error) => {
@@ -48,27 +49,21 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { gitUserData, isUsernameInvalid } = this.state;
+    const { isUsernameInvalid } = this.state;
     return (
-      <UserDataContext.Provider
-        value={{
-          UserGitData: gitUserData
-        }}
-      >
-        <LoginPageContainer>
-          <LoginPageHeading>Github Profile Visualizer</LoginPageHeading>
-          <TextInput
-            placeholder="Enter github username"
-            type="text"
-            isUsernameInvalid={isUsernameInvalid}
-            onKeyUp={this.onChangeUsername}
-          />
-          <ErrorMessage>
-            {isUsernameInvalid && "Enter the valid github username"}
-          </ErrorMessage>
-          <LoginPageImage src={LoginPageLogo} />
-        </LoginPageContainer>
-      </UserDataContext.Provider>
+      <LoginPageContainer>
+        <LoginPageHeading>Github Profile Visualizer</LoginPageHeading>
+        <TextInput
+          placeholder="Enter github username"
+          type="text"
+          isUsernameInvalid={isUsernameInvalid}
+          onKeyUp={this.onChangeUsername}
+        />
+        <ErrorMessage>
+          {isUsernameInvalid && "Enter the valid github username"}
+        </ErrorMessage>
+        <LoginPageImage src={LoginPageLogo} />
+      </LoginPageContainer>
     );
   }
 }
