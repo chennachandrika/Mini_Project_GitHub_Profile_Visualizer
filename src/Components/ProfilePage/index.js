@@ -1,4 +1,7 @@
 import { Component } from "react";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import BusinessIcon from "@material-ui/icons/Business";
+import LinkIcon from "@material-ui/icons/Link";
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
@@ -82,17 +85,20 @@ class ProfilePage extends Component {
     );
   };
 
-  renderUserWorkAreaInfo = (userInfo) => {
+  renderUserWorkAreaInfo = (userInfo, Component) => {
     const { infoData, infoAbout } = userInfo;
-    return (
-      <InfoContainer
-        changeOrder={infoData === "Company URL"}
-        key={infoAbout.toLowerCase()}
-      >
-        <InfoData>{infoData}</InfoData>
-        <InfoAbout>{infoAbout}</InfoAbout>
-      </InfoContainer>
-    );
+
+    if (infoAbout) {
+      return (
+        <InfoContainer changeOrder={infoData === "Git URL"} key={infoAbout}>
+          <InfoData>{infoData}</InfoData>
+          <InfoAbout>
+            <Component style={{ color: "white" }} />
+            {infoAbout}
+          </InfoAbout>
+        </InfoContainer>
+      );
+    }
   };
 
   renderProfileView = () => {
@@ -133,18 +139,27 @@ class ProfilePage extends Component {
           })}
         </UserInfoContainer>
         <UserInfoContainer>
-          {this.renderUserWorkAreaInfo({
-            infoAbout: company,
-            infoData: "Company"
-          })}
-          {this.renderUserWorkAreaInfo({
-            infoAbout: companyUrl,
-            infoData: "Company URL"
-          })}
-          {this.renderUserWorkAreaInfo({
-            infoAbout: location,
-            infoData: "Location"
-          })}
+          {this.renderUserWorkAreaInfo(
+            {
+              infoAbout: company,
+              infoData: "Company"
+            },
+            BusinessIcon
+          )}
+          {this.renderUserWorkAreaInfo(
+            {
+              infoAbout: companyUrl,
+              infoData: "Git URL"
+            },
+            LinkIcon
+          )}
+          {this.renderUserWorkAreaInfo(
+            {
+              infoAbout: location,
+              infoData: "Location"
+            },
+            LocationOnIcon
+          )}
         </UserInfoContainer>
       </>
     );
@@ -168,10 +183,10 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <ProfilePage>
+      <>
         <Header />
         <ProfilePageContainer>{this.renderStatusView()}</ProfilePageContainer>
-      </ProfilePage>
+      </>
     );
   }
 }
