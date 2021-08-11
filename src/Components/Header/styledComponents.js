@@ -17,6 +17,8 @@ export const RouterLink = styled(Link)`
   text-decoration: none;
   padding-right: 10px;
   color: ${(props) => (props.issamepath === "true" ? "#3B82F6" : "#F8FAFC")};
+  outline: none;
+  cursor: pointer;
 `;
 
 export const NavbarToggle = styled(Navbar.Toggle)`
