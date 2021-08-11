@@ -18,6 +18,7 @@ class ProfilePage extends Component {
   };
 
   onSuccessDataCollected = (userData) => {
+    console.log(userData);
     this.setState = { userData, apiStatus: apiStatusConstants.success };
   };
 
@@ -34,7 +35,7 @@ class ProfilePage extends Component {
     const url = `https://api.github.com/users/${user}`;
 
     this.setState({
-      apiStatus: apiStatusConstants.failure
+      apiStatus: apiStatusConstants.inProgress
     });
 
     const response = await fetch(url);

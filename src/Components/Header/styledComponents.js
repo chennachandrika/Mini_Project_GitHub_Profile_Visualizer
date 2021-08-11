@@ -11,3 +11,11 @@ export const RouterLink = styled(Link)`
   padding-right: 10px;
   color: ${(props) => (props.issamepath === "true" ? "#3B82F6" : "#F8FAFC")};
 `;
+
+export const NavbarToggle = styled(Navbar.Toggle)`
+  outline: none;
+  :focus {
+    outline: none;
+    box-shadow: none;
+  }
+`;
