@@ -42,7 +42,7 @@ class ProfilePage extends Component {
         following: userData.following,
         publicRepos: userData.public_repos,
         company: userData.company,
-        companyUrl: userData.html_url,
+        companyUrl: userData.company_url,
         location: userData.location
       },
       apiStatus: apiStatusConstants.success

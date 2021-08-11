@@ -1,8 +1,22 @@
 import { Component } from "react";
+import NoData from "../LoginPage/resources/NoData.png";
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
-import { RepositoriesPageContainer, Heading } from "./styledComponents";
+import {
+  RepositoriesPageContainer,
+  Heading,
+  DataNotFoundViewContainer,
+  DataNotFoundViewLogo,
+  NoDataHeading,
+  RepositoryCard,
+  RepositoryTitle,
+  RepositoryDescription,
+  RepositoryLanguages,
+  RepositoryInfo,
+  RepositoryInfoContainer,
+  RepositoryInfoCount
+} from "./styledComponents";
 
 const apiStatusConstants = {
   initial: "INITIAL",
@@ -19,7 +33,13 @@ class RepositoriesPage extends Component {
   onSuccessDataCollected = (repositoriesData) => {
     console.log(repositoriesData);
     this.setState({
-      repositoriesData,
+      repositoriesData: repositoriesData.map((repositoriesData) => ({
+        title: repositoriesData.name,
+        description: repositoriesData.description,
+        languages: repositoriesData.language,
+        starsCount: repositoriesData.stargazers_count,
+        forksCount: repositoriesData.forks_count
+      })),
       apiStatus: apiStatusConstants.success
     });
   };
@@ -50,7 +70,52 @@ class RepositoriesPage extends Component {
     }
   };
 
-  renderRepositoriesView = () => {};
+  renderNoRespositoriesView = () => (
+    <DataNotFoundViewContainer>
+      <DataNotFoundViewLogo src={NoData} alt="data not found" />
+      <NoDataHeading>No Repositories Found!</NoDataHeading>
+    </DataNotFoundViewContainer>
+  );
+
+  repositoryCard = (repoDetails) => {
+    const {
+      title,
+      description,
+      languages,
+      starsCount,
+      forksCount
+    } = repoDetails;
+    return (
+      <RepositoryCard>
+        <RepositoryTitle>{title}</RepositoryTitle>
+        <RepositoryDescription>{description}</RepositoryDescription>
+        <RepositoryLanguages>{languages}</RepositoryLanguages>
+        <RepositoryInfo>
+          <RepositoryInfoContainer>
+            <RepositoryInfoCount>{starsCount}</RepositoryInfoCount>
+          </RepositoryInfoContainer>
+          <RepositoryInfoContainer>
+            <RepositoryInfoCount>{forksCount}</RepositoryInfoCount>
+          </RepositoryInfoContainer>
+        </RepositoryInfo>
+      </RepositoryCard>
+    );
+  };
+
+  renderRepositoriesView = () => {
+    const { repositoriesData } = this.state;
+    if (repositoriesData.length === 0) {
+      return this.renderNoRespositoriesView();
+    }
+    return (
+      <>
+        <Heading>Repositories</Heading>
+        {repositoriesData.map((repoDetails) =>
+          this.repositoryCard(repoDetails)
+        )}
+      </>
+    );
+  };
 
   renderFailureView = () => <FailureView />;
   renderLoadingView = () => <LoadingView />;
@@ -74,7 +139,6 @@ class RepositoriesPage extends Component {
       <>
         <Header />
         <RepositoriesPageContainer>
-          <Heading>Repositories</Heading>
           {this.renderStatusView()}
         </RepositoriesPageContainer>
       </>
