@@ -6,7 +6,7 @@ const ProtectedRoute = (props) => {
   if (user_access_token) {
     return <Route {...props} />;
   } else {
-    return <Redirect to="/login" />;
+    return <Redirect to="/" />;
   }
 };
 

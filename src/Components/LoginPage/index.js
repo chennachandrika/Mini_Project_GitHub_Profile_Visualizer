@@ -26,7 +26,6 @@ class LoginPage extends Component {
     console.log(history);
     const { id } = userData;
     cookie.set("awt_token", id);
-    console.log(userData);
     history.replace(`/${username}/profile`);
   };
 

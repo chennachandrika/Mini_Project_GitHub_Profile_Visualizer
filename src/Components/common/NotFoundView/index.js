@@ -1,4 +1,4 @@
-import NotFoundViewImg from "../LoginPage/resources/NotFoundViewImg.png";
+import NotFoundViewImg from "../../LoginPage/resources/NotFoundViewImg.png";
 import {
   NotFoundViewContainer,
   NotFoundViewLogo,
