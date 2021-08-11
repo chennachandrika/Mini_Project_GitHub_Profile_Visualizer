@@ -1,7 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import LoginPage from "./Components/LoginPage";
-import NotFoundView from "./Components/NotFoundView";
+import NotFoundView from "./Components/common/NotFoundView";
 // import ProtectedRoute from "./Components/ProtectedRoute";
 import ProfilePage from "./Components/ProfilePage";
 import "./styles.css";
