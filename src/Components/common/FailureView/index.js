@@ -4,7 +4,7 @@ import {
   FailureText,
   TryAgainButton
 } from "./styledComponents";
-import SomethingWentWrong from "../LoginPage/resources/SomethingWentWrong.png";
+import SomethingWentWrong from "../../LoginPage/resources/SomethingWentWrong.png";
 const FailureView = () => (
   <FailureViewContainer>
     <FailureViewLogo src={SomethingWentWrong} alt="something went wrong" />

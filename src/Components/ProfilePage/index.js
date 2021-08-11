@@ -1,5 +1,7 @@
 import { Component } from "react";
 import Header from "../Header";
+import FailureView from "../common/FailureView";
+import LoadingView from "../common/LoadingView";
 import { ProfilePageContainer } from "./styledComponents";
 
 const apiStatusConstants = {
@@ -32,7 +34,7 @@ class ProfilePage extends Component {
     const url = `https://api.github.com/users/${user}`;
 
     this.setState({
-      apiStatus: apiStatusConstants.inProgress
+      apiStatus: apiStatusConstants.failure
     });
 
     const response = await fetch(url);
@@ -45,9 +47,9 @@ class ProfilePage extends Component {
     }
   };
 
-  renderProfileView = () => {};
-  renderFailureView = () => {};
-  renderLoadingView = () => {};
+  renderProfileView = () => <p>Profile</p>;
+  renderFailureView = () => <FailureView />;
+  renderLoadingView = () => <LoadingView />;
 
   renderStatusView = () => {
     const { apiStatus } = this.state;
@@ -67,7 +69,7 @@ class ProfilePage extends Component {
     return (
       <>
         <Header />
-        <ProfilePageContainer>Hi</ProfilePageContainer>
+        <ProfilePageContainer>{this.renderStatusView()}</ProfilePageContainer>
       </>
     );
   }

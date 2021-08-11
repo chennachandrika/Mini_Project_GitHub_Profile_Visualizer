@@ -10,6 +10,7 @@ export const FailureViewContainer = styled.div`
 export const FailureViewLogo = styled.img`
   width: 296px;
   height: 145px;
+  margin: 10px;
   @media screen and (min-width: 1024px) {
     width: 560px;
     height: 274px;
@@ -20,8 +21,10 @@ export const FailureText = styled.h1`
   font-size: 20px;
   color: #ffffff;
   text-align: center;
+  width: 300px;
   @media screen and (min-width: 1024px) {
     font-size: 32px;
+    width: 500px;
   }
 `;
 
