@@ -6,6 +6,13 @@ export const NavbarBar = styled(Navbar)`
   background-color: #0f172a;
 `;
 
+export const NavbarBrand = styled(Navbar.Brand)`
+  font-size: 16px;
+  @media screen and (min-width: 1024px) {
+    font-size: 24px;
+  }
+`;
+
 export const RouterLink = styled(Link)`
   text-decoration: none;
   padding-right: 10px;

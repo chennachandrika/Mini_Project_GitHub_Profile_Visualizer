@@ -1,6 +1,11 @@
 import { withRouter } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { RouterLink, NavbarBar, NavbarToggle } from "./styledComponents";
+import {
+  RouterLink,
+  NavbarBar,
+  NavbarBrand,
+  NavbarToggle
+} from "./styledComponents";
 
 const Header = (props) => {
   const { history, match } = props;
@@ -11,7 +16,7 @@ const Header = (props) => {
   return (
     <NavbarBar sticky="top" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Github Profile Visualizer</Navbar.Brand>
+        <NavbarBrand>Github Profile Visualizer</NavbarBrand>
         <NavbarToggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
           className="justify-content-end"
