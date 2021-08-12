@@ -1,5 +1,7 @@
 import { Component } from "react";
 import NoData from "../LoginPage/resources/NoData.png";
+import Git from "../LoginPage/resources/Git.png";
+import Star from "../LoginPage/resources/Star.png";
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
@@ -15,7 +17,8 @@ import {
   RepositoryLanguages,
   RepositoryInfo,
   RepositoryInfoContainer,
-  RepositoryInfoCount
+  RepositoryInfoCount,
+  RepositoryInfoIcon
 } from "./styledComponents";
 
 const apiStatusConstants = {
@@ -30,8 +33,13 @@ class RepositoriesPage extends Component {
     this.getRepostoriesData();
   };
 
-  onSuccessDataCollected = (repositoriesData) => {
-    console.log(repositoriesData);
+  getTheLanauges = async (url) => {
+    const response = await fetch(url);
+    const listOfLanguages = await response.json();
+    return [...Object.keys(listOfLanguages)];
+  };
+
+  onSuccessDataCollected = async (repositoriesData) => {
     this.setState({
       repositoriesData: repositoriesData.map((repositoriesData) => ({
         title: repositoriesData.name,
@@ -85,16 +93,22 @@ class RepositoriesPage extends Component {
       starsCount,
       forksCount
     } = repoDetails;
+
     return (
-      <RepositoryCard>
+      <RepositoryCard
+        key={`repos-${Math.random()}-${title}`}
+        to={`/Repositories/${title}`}
+      >
         <RepositoryTitle>{title}</RepositoryTitle>
         <RepositoryDescription>{description}</RepositoryDescription>
         <RepositoryLanguages>{languages}</RepositoryLanguages>
         <RepositoryInfo>
           <RepositoryInfoContainer>
+            <RepositoryInfoIcon src={Star} alt="git star icon" />
             <RepositoryInfoCount>{starsCount}</RepositoryInfoCount>
           </RepositoryInfoContainer>
           <RepositoryInfoContainer>
+            <RepositoryInfoIcon src={Git} alt="git fork icon" />
             <RepositoryInfoCount>{forksCount}</RepositoryInfoCount>
           </RepositoryInfoContainer>
         </RepositoryInfo>
