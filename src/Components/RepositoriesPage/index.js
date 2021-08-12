@@ -33,11 +33,11 @@ class RepositoriesPage extends Component {
     this.getRepostoriesData();
   };
 
-  getTheLanauges = async (url) => {
-    const response = await fetch(url);
-    const listOfLanguages = await response.json();
-    return [...Object.keys(listOfLanguages)];
-  };
+  // getTheLanauges = async (url) => {
+  //   const response = await fetch(url);
+  //   const listOfLanguages = await response.json();
+  //   return [...Object.keys(listOfLanguages)];
+  // };
 
   onSuccessDataCollected = async (repositoriesData) => {
     this.setState({

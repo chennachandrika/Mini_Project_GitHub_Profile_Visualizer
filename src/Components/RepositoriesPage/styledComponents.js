@@ -7,7 +7,7 @@ export const RepositoriesPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0f172a;
-  max-height: 100%;
+  width: 100%;
   min-height: 93vh;
   padding: 20px;
   @media screen and (min-width: 768px) {

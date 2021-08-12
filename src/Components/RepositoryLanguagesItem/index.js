@@ -28,6 +28,7 @@ class RepositoryLanguagesItem extends Component {
       <>
         {languagesList.map((item) => (
           <LanguageText
+            key={item}
             bgColor={textColors[Math.floor(Math.random() * textColors.length)]}
           >
             {item}
