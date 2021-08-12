@@ -44,7 +44,7 @@ class RepositoriesPage extends Component {
       repositoriesData: repositoriesData.map((repositoriesData) => ({
         title: repositoriesData.name,
         description: repositoriesData.description,
-        languages: repositoriesData.language,
+        languagesUrl: repositoriesData.languages_url,
         starsCount: repositoriesData.stargazers_count,
         forksCount: repositoriesData.forks_count
       })),
@@ -89,11 +89,10 @@ class RepositoriesPage extends Component {
     const {
       title,
       description,
-      languages,
+      languagesUrl,
       starsCount,
       forksCount
     } = repoDetails;
-
     return (
       <RepositoryCard
         key={`repos-${Math.random()}-${title}`}
@@ -101,7 +100,7 @@ class RepositoriesPage extends Component {
       >
         <RepositoryTitle>{title}</RepositoryTitle>
         <RepositoryDescription>{description}</RepositoryDescription>
-        <RepositoryLanguages>{languages}</RepositoryLanguages>
+        <RepositoryLanguages>{languagesUrl}</RepositoryLanguages>
         <RepositoryInfo>
           <RepositoryInfoContainer>
             <RepositoryInfoIcon src={Star} alt="git star icon" />
