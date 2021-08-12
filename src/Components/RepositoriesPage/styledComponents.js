@@ -7,7 +7,8 @@ export const RepositoriesPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0f172a;
-  height: 100%;
+  max-height: 100%;
+  min-height: 93vh;
   padding: 20px;
   @media screen and (min-width: 768px) {
     height: 100%;
@@ -16,11 +17,10 @@ export const RepositoriesPageContainer = styled.div`
 export const Heading = styled.h1`
   font-weight: bold;
   font-size: 24px;
-  align-self: flex-start;
+  align-self: center;
   color: #f8fafc;
   @media screen and (min-width: 768px) {
     font-size: 32px;
-    align-self: center;
   }
 `;
 export const DataNotFoundViewContainer = styled.div`

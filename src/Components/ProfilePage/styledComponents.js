@@ -6,9 +6,12 @@ export const ProfilePageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0f172a;
+  padding: 10px;
   height: 100%;
   @media screen and (min-width: 768px) {
-    height: 93vh;
+    min-height: 93vh;
+    max-height: 100%;
+    padding: 20px;
   }
 `;
 
