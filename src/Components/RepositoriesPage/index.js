@@ -1,5 +1,7 @@
 import { Component } from "react";
 import NoData from "../LoginPage/resources/NoData.png";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
 import Header from "../Header";
 import FailureView from "../common/FailureView";
@@ -18,9 +20,13 @@ import {
   RepositoryInfo,
   RepositoryInfoContainer,
   RepositoryInfoCount,
-  RepositoryInfoIcon
+  RepositoryInfoIcon,
+  PaginationContainer,
+  PaginationButton,
+  PaginationPages
 } from "./styledComponents";
-
+const reposPerPage = 3;
+const initialPageNumber = 1;
 const apiStatusConstants = {
   initial: "INITIAL",
   success: "SUCCESS",
@@ -28,28 +34,35 @@ const apiStatusConstants = {
   inProgress: "IN_PROGRESS"
 };
 class RepositoriesPage extends Component {
-  state = { repositoriesData: "", apiStatus: apiStatusConstants.initial };
-  componentDidMount = () => {
-    this.getRepostoriesData();
+  // _isMounted = false;
+  state = {
+    repositoriesData: "",
+    currentPage: initialPageNumber,
+    totalPages: "",
+    apiStatus: apiStatusConstants.initial
   };
 
-  // getTheLanauges = async (url) => {
-  //   const response = await fetch(url);
-  //   const listOfLanguages = await response.json();
-  //   return [...Object.keys(listOfLanguages)];
-  // };
-
+  componentDidMount = () => {
+    // this._isMounted = true;
+    this.getRepostoriesData();
+  };
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  // }
   onSuccessDataCollected = async (repositoriesData) => {
-    this.setState({
-      repositoriesData: repositoriesData.map((repositoriesData) => ({
-        title: repositoriesData.name,
-        description: repositoriesData.description,
-        languagesUrl: repositoriesData.languages_url,
-        starsCount: repositoriesData.stargazers_count,
-        forksCount: repositoriesData.forks_count
-      })),
-      apiStatus: apiStatusConstants.success
-    });
+    this.setState(
+      {
+        repositoriesData: repositoriesData.map((repositoriesData) => ({
+          title: repositoriesData.name,
+          description: repositoriesData.description,
+          languagesUrl: repositoriesData.languages_url,
+          starsCount: repositoriesData.stargazers_count,
+          forksCount: repositoriesData.forks_count
+        })),
+        apiStatus: apiStatusConstants.success
+      },
+      this.getTheCountOfRepos
+    );
   };
 
   onFailureDataCollected = () => {
@@ -62,13 +75,14 @@ class RepositoriesPage extends Component {
     const { match } = this.props;
     const { params } = match;
     const { user } = params;
-    const url = `https://api.github.com/users/${user}/repos`;
+    const { currentPage } = this.state;
 
+    const reposUrl = `https://api.github.com/users/${user}/repos?page=${currentPage}&per_page=3`;
     this.setState({
       apiStatus: apiStatusConstants.inProgress
     });
 
-    const response = await fetch(url);
+    const response = await fetch(reposUrl);
 
     if (response.ok) {
       const repositoriesData = await response.json();
@@ -76,6 +90,20 @@ class RepositoriesPage extends Component {
     } else {
       this.onFailureDataCollected(true);
     }
+  };
+
+  getTheCountOfRepos = async () => {
+    const { match } = this.props;
+    const { params } = match;
+    const { user } = params;
+    const url = `https://api.github.com/users/${user}/repos`;
+    const response = await fetch(url);
+    const reposList = await response.json();
+    const remain = reposList.length % reposPerPage;
+    const totalPagesCount = remain ? 1 : 0;
+    this.setState({
+      totalPages: totalPagesCount + Math.floor(reposList.length / reposPerPage)
+    });
   };
 
   renderNoRespositoriesView = () => (
@@ -124,6 +152,41 @@ class RepositoriesPage extends Component {
     );
   };
 
+  renderPagination = () => {
+    const { currentPage, totalPages } = this.state;
+    const nextPage = () => {
+      if (currentPage < totalPages) {
+        this.setState(
+          (prevState) => ({
+            currentPage: prevState.currentPage + 1
+          }),
+          this.getRepostoriesData
+        );
+      }
+    };
+    const prevPage = () => {
+      if (currentPage > 0) {
+        this.setState(
+          (prevState) => ({
+            currentPage: prevState.currentPage - 1
+          }),
+          this.getRepostoriesData
+        );
+      }
+    };
+    return (
+      <PaginationContainer>
+        <PaginationButton onClick={prevPage} type="button">
+          <KeyboardArrowLeftIcon style={{ color: "white" }} />
+        </PaginationButton>
+        <PaginationPages>{`${currentPage} of ${totalPages}`}</PaginationPages>
+        <PaginationButton onClick={nextPage} type="button">
+          <KeyboardArrowRightIcon style={{ color: "white" }} />
+        </PaginationButton>
+      </PaginationContainer>
+    );
+  };
+
   renderRepositoriesView = () => {
     const { repositoriesData } = this.state;
     if (repositoriesData.length === 0) {
@@ -135,6 +198,7 @@ class RepositoriesPage extends Component {
         {repositoriesData.map((repoDetails) =>
           this.repositoryCard(repoDetails)
         )}
+        {this.renderPagination()}
       </>
     );
   };

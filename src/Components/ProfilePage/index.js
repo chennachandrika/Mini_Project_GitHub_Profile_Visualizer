@@ -103,7 +103,7 @@ class ProfilePage extends Component {
 
   renderProfileView = () => {
     const { userData } = this.state;
-    console.log(userData);
+
     const {
       avatarUrl,
       name,
