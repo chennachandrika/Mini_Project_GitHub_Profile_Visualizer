@@ -1,22 +1,18 @@
 import { Component } from "react";
 import NoData from "../LoginPage/resources/NoData.png";
-import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
 import RepositoryCard from "../RepositoryCard";
+import Pagination from "../Pagination";
 
 import {
   RepositoriesPageContainer,
   Heading,
   DataNotFoundViewContainer,
   DataNotFoundViewLogo,
-  NoDataHeading,
-  PaginationContainer,
-  PaginationButton,
-  PaginationPages
+  NoDataHeading
 } from "./styledComponents";
 const reposPerPage = 3;
 const initialPageNumber = 1;
@@ -81,6 +77,28 @@ class RepositoriesPage extends Component {
     }
   };
 
+  gotoNextPage = () => {
+    const { currentPage, totalPages } = this.state;
+    if (currentPage < totalPages) {
+      this.setState(
+        (prevState) => ({
+          currentPage: prevState.currentPage + 1
+        }),
+        this.getRepostoriesData
+      );
+    }
+  };
+  gotoPrevPage = () => {
+    const { currentPage } = this.state;
+    if (currentPage > 0) {
+      this.setState(
+        (prevState) => ({
+          currentPage: prevState.currentPage - 1
+        }),
+        this.getRepostoriesData
+      );
+    }
+  };
   getTheCountOfRepos = async () => {
     const { match } = this.props;
     const { params } = match;
@@ -102,43 +120,8 @@ class RepositoriesPage extends Component {
     </DataNotFoundViewContainer>
   );
 
-  renderPagination = () => {
-    const { currentPage, totalPages } = this.state;
-    const nextPage = () => {
-      if (currentPage < totalPages) {
-        this.setState(
-          (prevState) => ({
-            currentPage: prevState.currentPage + 1
-          }),
-          this.getRepostoriesData
-        );
-      }
-    };
-    const prevPage = () => {
-      if (currentPage > 0) {
-        this.setState(
-          (prevState) => ({
-            currentPage: prevState.currentPage - 1
-          }),
-          this.getRepostoriesData
-        );
-      }
-    };
-    return (
-      <PaginationContainer>
-        <PaginationButton onClick={prevPage} type="button">
-          <KeyboardArrowLeftIcon style={{ color: "white" }} />
-        </PaginationButton>
-        <PaginationPages>{`${currentPage} of ${totalPages}`}</PaginationPages>
-        <PaginationButton onClick={nextPage} type="button">
-          <KeyboardArrowRightIcon style={{ color: "white" }} />
-        </PaginationButton>
-      </PaginationContainer>
-    );
-  };
-
   renderRepositoriesView = () => {
-    const { repositoriesData } = this.state;
+    const { repositoriesData, totalPages, currentPage } = this.state;
     if (repositoriesData.length === 0) {
       return this.renderNoRespositoriesView();
     }
@@ -146,15 +129,21 @@ class RepositoriesPage extends Component {
       <>
         <Heading>Repositories</Heading>
         {repositoriesData.map((repoDetails) => (
-          <RepositoryCard repoDetails={repoDetails} />
+          <RepositoryCard
+            key={`repos-${Math.random()}-${repoDetails.title}`}
+            repoDetails={repoDetails}
+          />
         ))}
-        {this.renderPagination()}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          gotoPrevPage={this.gotoPrevPage}
+          gotoNextPage={this.gotoNextPage}
+        />
       </>
     );
   };
-
-  renderFailureView = () => <FailureView />;
-  renderLoadingView = () => <LoadingView />;
 
   renderStatusView = () => {
     const { apiStatus } = this.state;
@@ -162,9 +151,9 @@ class RepositoriesPage extends Component {
       case apiStatusConstants.success:
         return this.renderRepositoriesView();
       case apiStatusConstants.failure:
-        return this.renderFailureView();
+        return <FailureView />;
       case apiStatusConstants.inProgress:
-        return this.renderLoadingView();
+        return <LoadingView />;
       default:
         return null;
     }

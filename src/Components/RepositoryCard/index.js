@@ -19,10 +19,7 @@ const RepositoryCard = (props) => {
     forksCount
   } = props.repoDetails;
   return (
-    <RepositoryCardContainer
-      key={`repos-${Math.random()}-${title}`}
-      to={`/Repositories/${title}`}
-    >
+    <RepositoryCardContainer to={`/Repositories/${title}`}>
       <RepositoryTitle>{title}</RepositoryTitle>
       <RepositoryDescription>{description}</RepositoryDescription>
 
