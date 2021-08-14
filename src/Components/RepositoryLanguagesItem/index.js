@@ -12,9 +12,17 @@ const textColors = [
 
 class RepositoryLanguagesItem extends Component {
   state = { languagesList: [] };
+
   componentDidMount = () => {
     this.getLanguages();
   };
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
   getLanguages = async () => {
     const { languagesUrl } = this.props;
     const response = await fetch(languagesUrl);

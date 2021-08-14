@@ -6,21 +6,14 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
-import RepositoryLanguagesItem from "../RepositoryLanguagesItem";
+import RepositoryCard from "../RepositoryCard";
+
 import {
   RepositoriesPageContainer,
   Heading,
   DataNotFoundViewContainer,
   DataNotFoundViewLogo,
   NoDataHeading,
-  RepositoryCard,
-  RepositoryTitle,
-  RepositoryDescription,
-  RepositoryLanguages,
-  RepositoryInfo,
-  RepositoryInfoContainer,
-  RepositoryInfoCount,
-  RepositoryInfoIcon,
   PaginationContainer,
   PaginationButton,
   PaginationPages
@@ -34,7 +27,6 @@ const apiStatusConstants = {
   inProgress: "IN_PROGRESS"
 };
 class RepositoriesPage extends Component {
-  // _isMounted = false;
   state = {
     repositoriesData: "",
     currentPage: initialPageNumber,
@@ -43,12 +35,9 @@ class RepositoriesPage extends Component {
   };
 
   componentDidMount = () => {
-    // this._isMounted = true;
     this.getRepostoriesData();
   };
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  // }
+
   onSuccessDataCollected = async (repositoriesData) => {
     this.setState(
       {
@@ -113,45 +102,6 @@ class RepositoriesPage extends Component {
     </DataNotFoundViewContainer>
   );
 
-  repositoryCard = (repoDetails) => {
-    const {
-      title,
-      description,
-      languagesUrl,
-      starsCount,
-      forksCount
-    } = repoDetails;
-    return (
-      <RepositoryCard
-        key={`repos-${Math.random()}-${title}`}
-        to={`/Repositories/${title}`}
-      >
-        <RepositoryTitle>{title}</RepositoryTitle>
-        <RepositoryDescription>{description}</RepositoryDescription>
-
-        <RepositoryLanguages>
-          <RepositoryLanguagesItem languagesUrl={languagesUrl} />
-        </RepositoryLanguages>
-        <RepositoryInfo>
-          <RepositoryInfoContainer>
-            <RepositoryInfoIcon
-              src="https://uploads.codesandbox.io/uploads/user/3b4bf1a2-79b9-4319-933d-c5a16235ae34/SO7Q-Star.png"
-              alt="git star icon"
-            />
-            <RepositoryInfoCount>{starsCount}</RepositoryInfoCount>
-          </RepositoryInfoContainer>
-          <RepositoryInfoContainer>
-            <RepositoryInfoIcon
-              src="https://uploads.codesandbox.io/uploads/user/3b4bf1a2-79b9-4319-933d-c5a16235ae34/1asD-Git.png"
-              alt="git fork icon"
-            />
-            <RepositoryInfoCount>{forksCount}</RepositoryInfoCount>
-          </RepositoryInfoContainer>
-        </RepositoryInfo>
-      </RepositoryCard>
-    );
-  };
-
   renderPagination = () => {
     const { currentPage, totalPages } = this.state;
     const nextPage = () => {
@@ -195,9 +145,9 @@ class RepositoriesPage extends Component {
     return (
       <>
         <Heading>Repositories</Heading>
-        {repositoriesData.map((repoDetails) =>
-          this.repositoryCard(repoDetails)
-        )}
+        {repositoriesData.map((repoDetails) => (
+          <RepositoryCard repoDetails={repoDetails} />
+        ))}
         {this.renderPagination()}
       </>
     );
