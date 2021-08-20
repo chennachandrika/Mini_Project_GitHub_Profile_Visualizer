@@ -1,6 +1,5 @@
 import RepositoryLanguagesItem from "../RepositoryLanguagesItem";
 import {
-  RepositoryCardContainer,
   RepositoryTitle,
   RepositoryDescription,
   RepositoryLanguages,
@@ -19,7 +18,7 @@ const RepositoryCard = (props) => {
     forksCount
   } = props.repoDetails;
   return (
-    <RepositoryCardContainer to={`/Repositories/${title}`}>
+    <>
       <RepositoryTitle>{title}</RepositoryTitle>
       <RepositoryDescription>{description}</RepositoryDescription>
 
@@ -42,7 +41,7 @@ const RepositoryCard = (props) => {
           <RepositoryInfoCount>{forksCount}</RepositoryInfoCount>
         </RepositoryInfoContainer>
       </RepositoryInfo>
-    </RepositoryCardContainer>
+    </>
   );
 };
 

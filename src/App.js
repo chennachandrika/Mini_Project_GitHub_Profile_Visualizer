@@ -14,6 +14,11 @@ export default function App() {
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/:user/profile" component={ProfilePage} />
         <Route exact path="/:user/repositories" component={RepositoriesPage} />
+        <Route
+          exact
+          path="/:user/repositories/:repositoryName"
+          component={() => "hi"}
+        />
         <Route exact path="/:user/analysis" component={ProfilePage} />
         <Route component={NotFoundView} />
       </Switch>

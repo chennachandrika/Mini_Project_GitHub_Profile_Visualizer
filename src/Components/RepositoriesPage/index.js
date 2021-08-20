@@ -9,6 +9,7 @@ import Pagination from "../Pagination";
 
 import {
   RepositoriesPageContainer,
+  RepositoryCardContainer,
   Heading,
   DataNotFoundViewContainer,
   DataNotFoundViewLogo,
@@ -129,10 +130,12 @@ class RepositoriesPage extends Component {
       <>
         <Heading>Repositories</Heading>
         {repositoriesData.map((repoDetails) => (
-          <RepositoryCard
-            key={`repos-${Math.random()}-${repoDetails.title}`}
-            repoDetails={repoDetails}
-          />
+          <RepositoryCardContainer to={`/Repositories/${repoDetails.title}`}>
+            <RepositoryCard
+              key={`repos-${Math.random()}-${repoDetails.title}`}
+              repoDetails={repoDetails}
+            />
+          </RepositoryCardContainer>
         ))}
 
         <Pagination
