@@ -3,12 +3,19 @@ import { withRouter } from "react-router-dom";
 import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
 import { LanguagesHeading } from "./styledComponents";
 const textColors = [
+  "#38BDF8",
   "#E879F9",
   "#4ADE80",
-  "#38BDF8",
   "#F472B6",
   "#FBBF24",
-  "#C084FC"
+  "#C084FC",
+  "#ffb3b3",
+  "#ff944d",
+  "#ffff4d",
+  "#4db8ff",
+  "#85adad",
+  "#33ffad",
+  "#80ff80"
 ];
 
 class RepositoryLanguagePieChart extends Component {

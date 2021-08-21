@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 export const RepositoryItemPageContainer = styled.div`
   display: flex;
@@ -28,4 +30,46 @@ export const RepositoryCardContainer = styled.div`
     height: 100%;
     width: 1140px;
   }
+`;
+
+export const RepoPath = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f172a;
+`;
+
+export const LinkTo = styled(Link)`
+  text-decoration: none;
+  outline: none;
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+    color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
+  }
+  font-weight: bold;
+  color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
+  font-size: 18px;
+  margin-top: 15px;
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+`;
+
+export const Text = styled.h1`
+  font-size: 18px;
+  margin-top: 15px;
+  color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+`;
+
+export const NextIcon = styled(ChevronRightIcon)`
+  color: #7e858e;
+  margin: 10px 0;
 `;

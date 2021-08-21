@@ -3,10 +3,15 @@ import Header from "../Header";
 import RepositoryCard from "../RepositoryCard";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
+import RepositoryContributors from "../RepositoryContributors";
 import RepositoryLanguagePieChart from "../RepositoryLanguagePieChart";
 import {
   RepositoryItemPageContainer,
-  RepositoryCardContainer
+  RepositoryCardContainer,
+  RepoPath,
+  LinkTo,
+  NextIcon,
+  Text
 } from "./styledComponents";
 
 const apiStatusConstants = {
@@ -69,6 +74,7 @@ class RepositoryItemPage extends Component {
     return (
       <RepositoryCardContainer>
         <RepositoryCard repoDetails={repoDetails} />
+        <RepositoryContributors contributorsUrl={repoDetails.contributorsUrl} />
         <RepositoryLanguagePieChart languagesUrl={repoDetails.languagesUrl} />
       </RepositoryCardContainer>
     );
@@ -87,9 +93,20 @@ class RepositoryItemPage extends Component {
     }
   };
   render() {
+    const { match } = this.props;
+    const { params } = match;
+    const { repositoryName, user } = params;
     return (
       <>
         <Header />
+        <RepoPath>
+          <LinkTo to={`/${user}/repositories`}>
+            <Text>
+              Repositories <NextIcon />
+            </Text>
+          </LinkTo>
+          <Text>{repositoryName}</Text>
+        </RepoPath>
         <RepositoryItemPageContainer>
           {this.renderStatusView()}
         </RepositoryItemPageContainer>

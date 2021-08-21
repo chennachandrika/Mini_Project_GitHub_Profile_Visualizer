@@ -12,6 +12,7 @@ const backgroundColors = {
 export const LanguageText = styled.p`
   margin: 0;
   margin-right: 10px;
+  margin-bottom: 10px;
   padding: 5px 10px;
   border-radius: 20px;
   color: ${(props) => props.bgColor};
