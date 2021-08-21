@@ -5,6 +5,7 @@ import NotFoundView from "./Components/common/NotFoundView";
 // import ProtectedRoute from "./Components/ProtectedRoute";
 import ProfilePage from "./Components/ProfilePage";
 import RepositoriesPage from "./Components/RepositoriesPage";
+import RepositoryItemPage from "./Components/RepositoryItemPage";
 import "./styles.css";
 
 export default function App() {
@@ -16,8 +17,8 @@ export default function App() {
         <Route exact path="/:user/repositories" component={RepositoriesPage} />
         <Route
           exact
-          path="/:user/repositories/:repositoryName"
-          component={() => "hi"}
+          path="/:user/repository/:repositoryName"
+          component={RepositoryItemPage}
         />
         <Route exact path="/:user/analysis" component={ProfilePage} />
         <Route component={NotFoundView} />

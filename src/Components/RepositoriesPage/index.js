@@ -122,6 +122,9 @@ class RepositoriesPage extends Component {
   );
 
   renderRepositoriesView = () => {
+    const { match } = this.props;
+    const { params } = match;
+    const { user } = params;
     const { repositoriesData, totalPages, currentPage } = this.state;
     if (repositoriesData.length === 0) {
       return this.renderNoRespositoriesView();
@@ -130,7 +133,9 @@ class RepositoriesPage extends Component {
       <>
         <Heading>Repositories</Heading>
         {repositoriesData.map((repoDetails) => (
-          <RepositoryCardContainer to={`/Repositories/${repoDetails.title}`}>
+          <RepositoryCardContainer
+            to={`/${user}/repository/${repoDetails.title}`}
+          >
             <RepositoryCard
               key={`repos-${Math.random()}-${repoDetails.title}`}
               repoDetails={repoDetails}
