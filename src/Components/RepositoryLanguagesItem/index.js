@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import { LanguageText } from "./styledComponents";
 
 const textColors = [
@@ -25,7 +26,11 @@ class RepositoryLanguagesItem extends Component {
 
   getLanguages = async () => {
     const { languagesUrl } = this.props;
-    const response = await fetch(languagesUrl);
+    const options = {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
+    const response = await fetch(languagesUrl, options);
     const languages = await response.json();
     this.setState({ languagesList: [...Object.keys(languages)] });
   };

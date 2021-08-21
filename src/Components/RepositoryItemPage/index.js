@@ -3,6 +3,7 @@ import Header from "../Header";
 import RepositoryCard from "../RepositoryCard";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
+import RepositoryLanguagePieChart from "../RepositoryLanguagePieChart";
 import {
   RepositoryItemPageContainer,
   RepositoryCardContainer
@@ -67,7 +68,8 @@ class RepositoryItemPage extends Component {
     const { repoDetails } = this.state;
     return (
       <RepositoryCardContainer>
-        <RepositoryCard repoDetails={repoDetails} />;
+        <RepositoryCard repoDetails={repoDetails} />
+        <RepositoryLanguagePieChart languagesUrl={repoDetails.languagesUrl} />
       </RepositoryCardContainer>
     );
   };

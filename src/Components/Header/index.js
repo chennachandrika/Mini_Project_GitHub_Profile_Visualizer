@@ -12,7 +12,8 @@ const Header = (props) => {
   const { location } = history;
   const { pathname } = location;
   const { params } = match;
-  const { user } = params;
+  const { user, repositoryName } = params;
+
   return (
     <NavbarBar sticky="top" variant="dark" expand="lg">
       <Container>
@@ -31,7 +32,10 @@ const Header = (props) => {
             </RouterLink>
             <RouterLink
               to={`/${user}/repositories`}
-              issamepath={(pathname === `/${user}/repositories`).toString()}
+              issamepath={(
+                pathname === `/${user}/repositories` ||
+                pathname === `/${user}/repository/${repositoryName}`
+              ).toString()}
             >
               Repositories
             </RouterLink>

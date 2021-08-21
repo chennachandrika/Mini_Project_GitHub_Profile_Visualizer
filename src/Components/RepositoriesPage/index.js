@@ -23,6 +23,7 @@ const apiStatusConstants = {
   failure: "FAILURE",
   inProgress: "IN_PROGRESS"
 };
+
 class RepositoriesPage extends Component {
   state = {
     repositoriesData: "",
@@ -134,12 +135,10 @@ class RepositoriesPage extends Component {
         <Heading>Repositories</Heading>
         {repositoriesData.map((repoDetails) => (
           <RepositoryCardContainer
+            key={`repos-${Math.random()}-${repoDetails.title}`}
             to={`/${user}/repository/${repoDetails.title}`}
           >
-            <RepositoryCard
-              key={`repos-${Math.random()}-${repoDetails.title}`}
-              repoDetails={repoDetails}
-            />
+            <RepositoryCard repoDetails={repoDetails} />
           </RepositoryCardContainer>
         ))}
 
