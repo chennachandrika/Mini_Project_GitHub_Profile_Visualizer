@@ -3,6 +3,7 @@ import Header from "../Header";
 import RepositoryCard from "../RepositoryCard";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
+import RepositoryInfoCount from "../RepositoryInfoCount";
 import RepositoryContributors from "../RepositoryContributors";
 import RepositoryLanguagePieChart from "../RepositoryLanguagePieChart";
 import {
@@ -10,8 +11,7 @@ import {
   RepositoryCardContainer,
   RepoPath,
   LinkTo,
-  NextIcon,
-  Text
+  NextIcon
 } from "./styledComponents";
 
 const apiStatusConstants = {
@@ -26,6 +26,13 @@ class RepositoryItemPage extends Component {
   componentDidMount = () => {
     this.getRepostoryData();
   };
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
   onSuccessDataCollected = async (repositoryData) => {
     this.setState(
       {
@@ -36,8 +43,9 @@ class RepositoryItemPage extends Component {
           starsCount: repositoryData.stargazers_count,
           forksCount: repositoryData.forks_count,
           contributorsUrl: repositoryData.contributors_url,
-          commits_url: repositoryData.commits_url,
-          issues_url: repositoryData.repositoryData
+          htmlUrl: repositoryData.html_url,
+          commitsUrl: repositoryData.commits_url,
+          openIssuesCount: repositoryData.open_issues_count
         },
         apiStatus: apiStatusConstants.success
       },
@@ -64,6 +72,7 @@ class RepositoryItemPage extends Component {
 
     if (response.ok) {
       const repositoryData = await response.json();
+      console.log(repositoryData);
       this.onSuccessDataCollected(repositoryData);
     } else {
       this.onFailureDataCollected(true);
@@ -71,9 +80,14 @@ class RepositoryItemPage extends Component {
   };
   renderRepositoryView = () => {
     const { repoDetails } = this.state;
+
     return (
       <RepositoryCardContainer>
         <RepositoryCard repoDetails={repoDetails} />
+        <RepositoryInfoCount
+          commitsUrl={repoDetails.commitsUrl}
+          openIssuesCount={repoDetails.openIssuesCount}
+        />
         <RepositoryContributors contributorsUrl={repoDetails.contributorsUrl} />
         <RepositoryLanguagePieChart languagesUrl={repoDetails.languagesUrl} />
       </RepositoryCardContainer>
@@ -100,12 +114,11 @@ class RepositoryItemPage extends Component {
       <>
         <Header />
         <RepoPath>
-          <LinkTo to={`/${user}/repositories`}>
-            <Text>
-              Repositories <NextIcon />
-            </Text>
+          <LinkTo to={`/${user}/repositories`}>Repositories</LinkTo>
+          <NextIcon />
+          <LinkTo isactive="true" to={`/${user}/repository/${repositoryName}`}>
+            {repositoryName}
           </LinkTo>
-          <Text>{repositoryName}</Text>
         </RepoPath>
         <RepositoryItemPageContainer>
           {this.renderStatusView()}

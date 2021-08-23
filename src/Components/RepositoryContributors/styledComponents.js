@@ -36,3 +36,33 @@ export const ContributorsAvatar = styled.img`
     height: 48px;
   }
 `;
+
+export const ContributorsCount = styled.p`
+  color: #ffffff;
+  font-size: 16px;
+  margin-top: 15px;
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+export const ContributorsCountPresent = styled.div`
+  color: #0f172a;
+  font-size: 16px;
+  margin-top: 15px;
+  width: 32px;
+  height: 32px;
+  border-radius: 24px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+    width: 48px;
+    height: 48px;
+  }
+`;

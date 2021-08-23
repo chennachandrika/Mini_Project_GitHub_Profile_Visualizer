@@ -4,7 +4,9 @@ import {
   RepositoryContributorsContainer,
   RepoContributorsHeading,
   ContributorsList,
-  ContributorsAvatar
+  ContributorsAvatar,
+  ContributorsCount,
+  ContributorsCountPresent
 } from "./styledComponents";
 class RepositoryContributors extends Component {
   state = { contributors: [] };
@@ -24,24 +26,36 @@ class RepositoryContributors extends Component {
 
   renderRepositoryContributors = () => {
     const { contributors } = this.state;
-    console.log(contributors);
     return (
-      <ContributorsList>
-        {contributors.map((contributor) => (
-          <ContributorsAvatar
-            key={contributor.id}
-            src={contributor.avatar_url}
-            alt={contributor.login}
-          />
-        ))}
-      </ContributorsList>
+      <>
+        <RepoContributorsHeading>Contributors :</RepoContributorsHeading>
+        <ContributorsCount>{`${contributors.length} Members`}</ContributorsCount>
+        <ContributorsList>
+          {contributors.map((contributor, index) => {
+            if (index <= 4) {
+              return (
+                <ContributorsAvatar
+                  key={contributor.id}
+                  src={contributor.avatar_url}
+                  alt={contributor.login}
+                />
+              );
+            }
+            return "";
+          })}
+          {contributors.length > 5 && (
+            <ContributorsCountPresent>
+              {`+${contributors.length - 5}`}
+            </ContributorsCountPresent>
+          )}
+        </ContributorsList>
+      </>
     );
   };
 
   render() {
     return (
       <RepositoryContributorsContainer>
-        <RepoContributorsHeading>Contributors :</RepoContributorsHeading>
         {this.renderRepositoryContributors()}
       </RepositoryContributorsContainer>
     );

@@ -1,4 +1,5 @@
 import RepositoryLanguagesItem from "../RepositoryLanguagesItem";
+import LookUp from "../LoginPage/resources/LookUp.png";
 import {
   RepositoryTitle,
   RepositoryDescription,
@@ -6,7 +7,9 @@ import {
   RepositoryInfo,
   RepositoryInfoContainer,
   RepositoryInfoCount,
-  RepositoryInfoIcon
+  RepositoryInfoIcon,
+  LookUPLink,
+  LookUPImg
 } from "./styledComponents";
 
 const RepositoryCard = (props) => {
@@ -15,11 +18,17 @@ const RepositoryCard = (props) => {
     description,
     languagesUrl,
     starsCount,
-    forksCount
+    forksCount,
+    htmlUrl
   } = props.repoDetails;
   return (
     <>
-      <RepositoryTitle>{title}</RepositoryTitle>
+      <RepositoryTitle>
+        {title}
+        <LookUPLink href={htmlUrl} target="_blank">
+          {htmlUrl && <LookUPImg src={LookUp} />}
+        </LookUPLink>
+      </RepositoryTitle>
       <RepositoryDescription>{description}</RepositoryDescription>
 
       <RepositoryLanguages>

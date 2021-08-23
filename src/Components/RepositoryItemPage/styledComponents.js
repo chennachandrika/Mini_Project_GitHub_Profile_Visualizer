@@ -49,23 +49,13 @@ export const LinkTo = styled(Link)`
   &:link,
   &:active {
     text-decoration: none;
-    color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
+    color: ${(props) => (props.isactive ? "#3B82F6;" : "#7E858E")};
   }
   font-weight: bold;
-  color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
-  font-size: 18px;
-  margin-top: 15px;
+  color: ${(props) => (props.isactive ? "#3B82F6;" : "#7E858E")};
+  font-size: 16px;
   @media screen and (min-width: 768px) {
-    font-size: 24px;
-  }
-`;
-
-export const Text = styled.h1`
-  font-size: 18px;
-  margin-top: 15px;
-  color: ${(props) => (props.isActive ? "#3B82F6;" : "#7E858E")};
-  @media screen and (min-width: 768px) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 

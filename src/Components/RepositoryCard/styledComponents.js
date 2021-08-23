@@ -58,3 +58,12 @@ export const RepositoryInfoCount = styled.p`
 export const RepositoryInfoIcon = styled.img`
   margin-right: 10px;
 `;
+
+export const LookUPImg = styled.img`
+  height: 21px;
+  width: 21px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
+export const LookUPLink = styled.a``;
