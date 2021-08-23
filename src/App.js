@@ -6,6 +6,7 @@ import NotFoundView from "./Components/common/NotFoundView";
 import ProfilePage from "./Components/ProfilePage";
 import RepositoriesPage from "./Components/RepositoriesPage";
 import RepositoryItemPage from "./Components/RepositoryItemPage";
+import AnalysisPage from "./Components/AnalysisPage";
 import "./styles.css";
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
           path="/:user/repository/:repositoryName"
           component={RepositoryItemPage}
         />
-        <Route exact path="/:user/analysis" component={ProfilePage} />
+        <Route exact path="/:user/analysis" component={AnalysisPage} />
         <Route component={NotFoundView} />
       </Switch>
     </BrowserRouter>

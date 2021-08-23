@@ -25,9 +25,13 @@ const RepositoryCard = (props) => {
     <>
       <RepositoryTitle>
         {title}
-        <LookUPLink href={htmlUrl} target="_blank">
-          {htmlUrl && <LookUPImg src={LookUp} />}
-        </LookUPLink>
+        <>
+          {htmlUrl && (
+            <LookUPLink href={htmlUrl} target="_blank">
+              <LookUPImg src={LookUp} />
+            </LookUPLink>
+          )}
+        </>
       </RepositoryTitle>
       <RepositoryDescription>{description}</RepositoryDescription>
 
