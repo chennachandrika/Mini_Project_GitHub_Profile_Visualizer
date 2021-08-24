@@ -18,6 +18,11 @@
   stroke: #555;
   stroke-width: 1px;
 }
+/* @media screen and (min-width: 768px) {
+  .react-calendar-heatmap rect:hover {
+    stroke-width: 2px;
+  }
+} */
 
 /*
  * Default color scale
