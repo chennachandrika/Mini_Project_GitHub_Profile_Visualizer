@@ -70,7 +70,7 @@ class RepositoriesPage extends Component {
     });
 
     const response = await fetch(reposUrl);
-
+    console.log(response);
     if (response.ok) {
       const repositoriesData = await response.json();
       this.onSuccessDataCollected(repositoriesData);

@@ -2,6 +2,7 @@ import { Component } from "react";
 import Header from "../Header";
 import FailureView from "../common/FailureView";
 import LoadingView from "../common/LoadingView";
+import LinearChart from "../CommitsPerQuater";
 import CommitHistory from "../CommitHistory";
 import { AnalysisPageContainer } from "./styledComponents";
 const apiStatusConstants = {
@@ -18,13 +19,10 @@ class AnalysisPage extends Component {
   };
   onSuccessDataCollected = async (analysisInfoData) => {
     console.log(analysisInfoData);
-    this.setState(
-      {
-        analysisInfo: analysisInfoData,
-        apiStatus: apiStatusConstants.success
-      },
-      this.getTheCountOfRepos
-    );
+    this.setState({
+      analysisInfo: analysisInfoData,
+      apiStatus: apiStatusConstants.success
+    });
   };
   onFailureDataCollected = () => {
     this.setState({
@@ -40,11 +38,12 @@ class AnalysisPage extends Component {
     this.setState({
       apiStatus: apiStatusConstants.inProgress
     });
-    const option = {
-      method: "GET"
-    };
-    const response = await fetch(analysisUrl, option);
 
+    const response = await fetch(analysisUrl, {
+      mode: "no-cors"
+    });
+    // const analysisInfoData = await response.json();
+    console.log(response);
     if (response.ok) {
       console.log(response);
       const analysisInfoData = await response.json();
@@ -53,7 +52,12 @@ class AnalysisPage extends Component {
       this.onFailureDataCollected(true);
     }
   };
-  renderAnalysisView = () => <CommitHistory />;
+  renderAnalysisView = () => (
+    <>
+      <LinearChart />
+      <CommitHistory />
+    </>
+  );
   renderStatusView = () => {
     const { apiStatus } = this.state;
     switch (apiStatus) {
