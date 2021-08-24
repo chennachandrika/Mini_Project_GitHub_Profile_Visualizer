@@ -6,6 +6,7 @@ export const AnalysisPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0f172a;
+  padding: 20px;
   width: 100%;
   min-height: 93vh;
   padding: 20px;

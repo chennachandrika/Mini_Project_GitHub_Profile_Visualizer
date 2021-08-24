@@ -42,7 +42,7 @@ class CommitHistory extends Component {
     startDate.setDate(startDate.getDate() - 232); // Past six months from today
     return (
       <>
-        <CommitHistoryHeading>Commit history</CommitHistoryHeading>
+        <CommitHistoryHeading>Commit History</CommitHistoryHeading>
 
         <CalendarHeatmap
           startDate={startDate}
